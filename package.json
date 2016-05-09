@@ -1,0 +1,30 @@
+{
+  "name": "yy-http",
+  "version": "1.0.0",
+  "description": "http client use promise",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "bluebird": "^3.3.5",
+    "lodash": "^4.12.0"
+  },
+  "devDependencies": {
+    "express": "^4.13.4",
+    "should": "^8.3.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuemenglong/yy-http.git"
+  },
+  "author": "yuemenglong@126.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yuemenglong/yy-http/issues"
+  },
+  "homepage": "https://github.com/yuemenglong/yy-http#readme"
+}
