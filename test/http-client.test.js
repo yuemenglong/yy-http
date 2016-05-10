@@ -1,6 +1,7 @@
 var should = require("should");
 var express = require("express");
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser')
 var qs = require("querystring");
 var Promise = require("bluebird");
 
@@ -100,6 +101,44 @@ describe('Http Client', function() {
             return client.delete("http://localhost/100");
         }).then(function(res) {
             res.data.should.eql("DELETE 100");
+        }).done(function() {
+            server.close(function() {
+                done();
+            })
+        })
+    });
+    it('Cookie Test', function(done) {
+        var app = express();
+        app.use(cookieParser());
+        app.get("/", function(req, res) {
+            if (req.query.k && req.query.v) {
+                res.cookie(req.query.k, req.query.v);
+            }
+            res.end(JSON.stringify(req.cookies));
+        })
+        var server = app.listen(PORT);
+        var client = new HttpClient();
+        Promise.try(function() {
+            return client.get("http://localhost/");
+        }).then(function(res) {
+            client.addCookie("test", "1");
+            return client.get("http://localhost/");
+        }).then(function(res) {
+            var expect = JSON.stringify({ test: "1" });
+            res.data.toString().should.eql(expect);
+            return client.get("http://localhost/?k=name&v=a");
+        }).then(function(res) {
+            var expect = JSON.stringify({ test: "1" });
+            res.data.toString().should.eql(expect);
+            return client.get("http://localhost/?k=name&v=b");
+        }).then(function(res) {
+            var expect = JSON.stringify({ test: "1", name: "a" });
+            res.data.toString().should.eql(expect);
+            return client.get("http://localhost/");
+        }).then(function(res) {
+            var expect = JSON.stringify({ test: "1", name: "b" });
+            res.data.toString().should.eql(expect);
+            // console.log(client.getCookieString());
         }).done(function() {
             server.close(function() {
                 done();

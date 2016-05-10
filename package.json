@@ -13,11 +13,12 @@
   },
   "devDependencies": {
     "body-parser": "^1.15.1",
+    "cookie-parser": "^1.4.1",
     "express": "^4.13.4",
     "should": "^8.3.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test"
   },
   "repository": {
     "type": "git",
@@ -28,5 +29,10 @@
   "bugs": {
     "url": "https://github.com/yuemenglong/yy-http/issues"
   },
-  "homepage": "https://github.com/yuemenglong/yy-http#readme"
+  "homepage": "https://github.com/yuemenglong/yy-http#readme",
+  "keywords": [
+    "http",
+    "client",
+    "promise"
+  ]
 }
