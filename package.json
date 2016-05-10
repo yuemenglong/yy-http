@@ -8,9 +8,11 @@
   },
   "dependencies": {
     "bluebird": "^3.3.5",
+    "iconv-lite": "^0.4.13",
     "lodash": "^4.12.0"
   },
   "devDependencies": {
+    "body-parser": "^1.15.1",
     "express": "^4.13.4",
     "should": "^8.3.1"
   },
