@@ -9,7 +9,8 @@
   "dependencies": {
     "bluebird": "^3.3.5",
     "iconv-lite": "^0.4.13",
-    "lodash": "^4.12.0"
+    "lodash": "^4.12.0",
+    "yy-exception": "^1.0.0"
   },
   "devDependencies": {
     "body-parser": "^1.15.1",
