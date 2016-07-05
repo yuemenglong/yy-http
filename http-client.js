@@ -51,14 +51,14 @@ util.inherits(HttpTimeoutError, Error);
 
 HttpClient.HttpTimeoutError = HttpTimeoutError;
 
-HttpClient.prototype.setRequestHeader = function(headers) {
+HttpClient.prototype._setRequestHeader = function(headers) {
     headers = headers || {};
     headers["Connection"] = headers["Connection"] || "keep-alive";
     headers["Cookie"] = stringifyCookie(_.merge(this.cookies, parseCookie(headers["Cookie"])));
     return headers;
 }
 
-HttpClient.prototype.handleResponseHeader = function(headers) {
+HttpClient.prototype._handleResponseHeader = function(headers) {
     var setCookie = headers["set-cookie"];
     var regex = /(.+?)=(.+?);.+/;
     for (var i in setCookie) {
@@ -69,7 +69,7 @@ HttpClient.prototype.handleResponseHeader = function(headers) {
 
 HttpClient.prototype.request = function(url, method, headers, content) {
     var that = this;
-    headers = that.setRequestHeader(headers);
+    headers = that._setRequestHeader(headers);
     var parsed = URL.parse(url);
     var opt = {
         host: parsed.hostname,
@@ -89,7 +89,7 @@ HttpClient.prototype.request = function(url, method, headers, content) {
     }
     return new Promise(function(resolve, reject) {
         var req = protocol.request(opt, function(res) {
-            that.handleResponseHeader(res.headers);
+            that._handleResponseHeader(res.headers);
             var buffer = [];
             res.on("data", function(data) {
                 buffer.push(data);
@@ -181,6 +181,16 @@ HttpClient.prototype.json = function(url, obj, headers) {
     headers["Content-Length"] = content.length;
     return this.request(url, "POST", headers, content);
 }
+
+HttpClient.prototype.put = function(url, obj, headers) {
+    headers = headers || {};
+    var content = JSON.stringify(obj);
+    headers["Content-Type"] = "application/json; charset=UTF-8";
+    headers["Content-Length"] = content.length;
+    return this.request(url, "PUT", headers, content);
+}
+
+HttpClient.prototype.post = HttpClient.prototype.json;
 
 module.exports = HttpClient;
 
