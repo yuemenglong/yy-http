@@ -1,6 +1,6 @@
 {
   "name": "yy-http",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "http client use promise",
   "main": "index.js",
   "directories": {
