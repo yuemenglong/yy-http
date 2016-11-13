@@ -12,6 +12,7 @@ var HTTP_TIMEOUT_ERROR = "HTTP_TIMEOUT_ERROR";
 
 function HttpClient() {
     this.cookies = {};
+    this.headers = {};
     this.timeout = 0;
     this.charset = "utf8";
 };
@@ -52,7 +53,8 @@ util.inherits(HttpTimeoutError, Error);
 HttpClient.HttpTimeoutError = HttpTimeoutError;
 
 HttpClient.prototype._setRequestHeader = function(headers) {
-    headers = headers || {};
+    // headers = headers || {};
+    headers = _.merge({}, this.headers, headers);
     headers["Connection"] = headers["Connection"] || "keep-alive";
     headers["Cookie"] = stringifyCookie(_.merge(this.cookies, parseCookie(headers["Cookie"])));
     return headers;
@@ -154,6 +156,15 @@ HttpClient.prototype.setCookie = function(cookies) {
 
 HttpClient.prototype.addCookie = function(name, value) {
     this.cookies[name] = value;
+}
+
+HttpClient.prototype.setHeader = function(name, value) {
+    if (_.isString(name) && _.isString(value)) {
+        var headers = _.zipObject([name], [value]);
+    } else {
+        var headers = name;
+    }
+    _.merge(this.headers, headers);
 }
 
 HttpClient.prototype.get = function(url, headers) {
