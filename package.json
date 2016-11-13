@@ -1,6 +1,10 @@
 {
   "name": "yy-http",
+<<<<<<< HEAD
   "version": "1.0.1",
+=======
+  "version": "1.0.2",
+>>>>>>> 772ecc3d5eed085f96570655df83ff46c1e9fd5a
   "description": "http client use promise",
   "main": "index.js",
   "directories": {

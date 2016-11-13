@@ -145,4 +145,23 @@ describe('Http Client', function() {
             })
         })
     });
+    it('Header Test', function(done) {
+        var app = express();
+        app.get("/", function(req, res) {
+            res.end(JSON.stringify(req.headers));
+        })
+        var server = app.listen(PORT);
+        var client = new HttpClient();
+        client.setHeader("Connection", "close");
+        Promise.try(function() {
+            return client.get("http://localhost/");
+        }).then(function(res) {
+            var ret = JSON.parse(res.body);
+            ret.connection.should.eql("close");
+        }).done(function() {
+            server.close(function() {
+                done();
+            })
+        })
+    });
 });
